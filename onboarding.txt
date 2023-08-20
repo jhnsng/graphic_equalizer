@@ -1,0 +1,22 @@
+Welcome to this repository.
+As mentioned in the README file, this project aims to implement a graphic audio equalizer in Python. A graphic equalizer (GEQ) is a simple type of GEQ where different frequency bands, divided amongst the audible range between 20-20,000 Hz, are assigned to sliders. These sliders boost or attenuate the gain at each frequency by a set decibel value (+-6dB, 12dB, etc) using bandpass filters in parallel. There are certain standardized frequency bands, depending on the type of GEQ. The equalizer selected for this project follows the ISO 10-band equalizer standard, meaning that the audible range of frequencies is divided into 10 different center frequencies. The actual values for the frequency bands can be found in the source code. 
+
+So far, there are three main files: main.py, filtering.py, and sliders.py. The main file is a place for experimenting and trying out different filters for now, but later it will be used to call the classes/methods from other files and control the whole workflow. The filtering.py file initializes the filter classes that are instantiated in main. It uses signal processing methods from Python libraries such as SciPy. This file is in charge of handling all the data logic and backend signal processing. The sliders.py file uses TKinter to set up the GUI. It has slider widgets that will later be linked to the filters and other signal processing components.
+
+In terms of theory (refer to the README file for the inspiration behind the project), IIR filters will be used for filtering, because they are apparently easier to deal with. However, since there are Python libraries that abstract the extremely low-level theory, we may be able to get away with using FIR. Here are some helpful links:
+
+https://en.wikipedia.org/wiki/Infinite_impulse_response
+https://en.wikipedia.org/wiki/Digital_biquad_filter
+https://en.wikipedia.org/wiki/Z-transform
+https://www.techtarget.com/searchenterprisedesktop/definition/graphic-equalizer
+
+Here is the proposed plan for this project:
+
+1. Play around with filters, sucessfully implement simple bandpass filters
+2. Link that bandpass filter to the slider, so that the gain can be controlled by the user (doesn't need to be real-time).
+3. Link all the filters to the sliders. Implement sliders that can be adjusted BEFORE audio playback (not real time).
+4. Add an audio spectrum visualizer so that the effects of filtering can be observed in real-time.
+5. Modify the code so that the sliders can be adjusted while playing the audio in real-time. 
+
+Going all the way to step 5 is ambitious. I can't say how difficult or how long it would take to implement real-time audio playback and processing. Although it would be very cool, that is not a priority. If we can implement an EQ that can adjust the sliders before playing the audio, that is good enough.
+
