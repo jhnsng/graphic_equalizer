@@ -4,30 +4,37 @@ import sounddevice as sd
 from scipy.io import wavfile
 from filtering import BandpassFilter
 
-order = 5
-fl = 2000
-fh = 20000
+# parameters
+order = 1   # filter order
+fl = 20     # low passband freq
+fh = 20000  # high passband freq
 
 # Load the .wav file
 sample_rate, audio_samples = wavfile.read('snippet_mono.wav')
+
+# play the original audio file
 sd.play(audio_samples, sample_rate, blocking=True)
 
 # instantiate filter class
 bandpass_filter = BandpassFilter()
 
-spectrum = np.fft.fft(audio_samples)
+# take fourier transform for audio spectrum
+spectrum = np.abs(np.fft.fft(audio_samples))
 
-butter = bandpass_filter.butter_bandpass(order, fl, fh, sample_rate)
+# apply filtering
+butter = bandpass_filter.iir_filter(order, fl, fh, sample_rate)
 sigout = bandpass_filter.filter(butter, audio_samples)
 [zeros, poles, gain] = bandpass_filter.zpk(butter)
-normalized_sigout = sigout*0.01
 
-sd.play(normalized_sigout, sample_rate, blocking=True)
+# play the filtered version
+sd.play(sigout, sample_rate, blocking=True)
 
-
-plt.plot(audio_samples)
+# plot spectrum
+plt.plot(spectrum)
 plt.show()
-sd.play(audio_samples, sample_rate, blocking=True)
+
+
+######EVERYTHING BELOW THIS IS CHATGPT##################
 
 # Define callback function for audio streaming
 
