@@ -21,6 +21,10 @@ bandpass_filter = BandpassFilter()
 # take fourier transform for audio spectrum
 spectrum = np.abs(np.fft.fft(audio_samples))
 
+# Normalize audio data -- this is what makes the filtered audio playback clear and not distorted
+audio_samples = audio_samples.astype(float) # we need to change audio_samples (integers) to type float for the next line of code to work
+audio_samples /= np.max(np.abs(audio_samples))
+
 # apply filtering
 butter = bandpass_filter.iir_filter(order, fl, fh, sample_rate)
 sigout = bandpass_filter.filter(butter, audio_samples)
