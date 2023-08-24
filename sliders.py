@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-# List of frequencies in Hertz
+# the frequency bands used in the GEQ
 frequencies = [
     31.25, 62.5, 125, 250, 500, 1000, 2000, 4000, 8000, 16000
 ]

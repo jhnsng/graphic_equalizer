@@ -1,29 +1,30 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import sounddevice as sd
-from scipy.io import wavfile
 from filtering import BandpassFilter
+from gui import Interface
+from audio import Audio
 
 # parameters
 order = 1   # filter order
-fl = 20     # low passband freq
+fl = 20    # low passband freq
 fh = 20000  # high passband freq
+file_to_read = 'snippet_mono.wav'
+file_to_write = 'filtered_snippet_mono.wav'
 
-# Load the .wav file
-sample_rate, audio_samples = wavfile.read('snippet_mono.wav')
+# Instantiate GUI
+interface = Interface()
 
-# play the original audio file
-sd.play(audio_samples, sample_rate, blocking=True)
+# Instantiate Audio class
+audio = Audio()
+
+# read input wav file
+[sample_rate, audio_samples] = audio.read_file(file_to_read)
 
 # instantiate filter class
 bandpass_filter = BandpassFilter()
 
 # take fourier transform for audio spectrum
-spectrum = np.abs(np.fft.fft(audio_samples))
-
-# Normalize audio data -- this is what makes the filtered audio playback clear and not distorted
-audio_samples = audio_samples.astype(float) # we need to change audio_samples (integers) to type float for the next line of code to work
-audio_samples /= np.max(np.abs(audio_samples))
+#spectrum = np.abs(np.fft.fft(audio_samples))
 
 # apply filtering
 butter = bandpass_filter.iir_filter(order, fl, fh, sample_rate)
