@@ -31,6 +31,7 @@ class Interface(tk.Tk):
 
     def __init__(self):
         super().__init__()  # constructor for tkinter superclass
+        self.sliders = []   # make sliders array more "global"
         self.initialize()
 
     def initialize(self):
@@ -44,7 +45,7 @@ class Interface(tk.Tk):
 
     def on_button2_click(self):
         audio.normalize_samples()
-        audio.play_filtered_audio(fl, fh, order)
+        audio.play_filtered_audio(order, frequencies, self.slider_values)
 
     def initialize_buttons(self):
         button1_frame = ttk.Frame(self)
@@ -66,12 +67,20 @@ class Interface(tk.Tk):
         slider_frame.pack()
 
         # Create sliders for each frequency
-        sliders = []
         for freq in frequencies:
             scale = tk.Scale(slider_frame, from_=6, to=-6,
                              orient=tk.VERTICAL, label=f'{freq}Hz')
             scale.pack(side=tk.LEFT, padx=5, pady=5)
-            sliders.append(scale)
+            self.sliders.append(scale) 
+
+            # Bind an event handler to update slider values 
+            # Each time a slider is adjusted, on_slider_adjust is called to update sliders array
+            scale.bind("<Motion>", self.on_slider_adjust)
+    
+    def on_slider_adjust(self, event):
+        # Populate slider_values array with newly adjusted slider values
+        self.slider_values = [scale.get() for scale in self.sliders]
+        print("Slider Values:", self.slider_values)
 
 
 interface = Interface()
