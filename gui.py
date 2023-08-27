@@ -68,13 +68,15 @@ class Interface(tk.Tk):
 
         # Create sliders for each frequency
         for freq in frequencies:
-            scale = tk.Scale(slider_frame, from_=6, to=-6,
+            scale = tk.Scale(slider_frame, from_=12, to=-12,
                              orient=tk.VERTICAL, label=f'{freq}Hz')
             scale.pack(side=tk.LEFT, padx=5, pady=5)
             self.sliders.append(scale) 
 
             # Bind an event handler to update slider values 
             # Each time a slider is adjusted, on_slider_adjust is called to update sliders array
+
+            self.slider_values = [0]*len(self.sliders)
             scale.bind("<Motion>", self.on_slider_adjust)
     
     def on_slider_adjust(self, event):
