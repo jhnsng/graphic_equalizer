@@ -52,8 +52,8 @@ class Audio():
         # instantiate bandpass filter
         bandpass_filter = BandpassFilter()
         
-        self.__butter = [0]*len(freqs)
-        self.filtered_samples_array = [0]*len(freqs)
+        self.__butter = [0]*len(self.original_samples)
+        self.filtered_samples_array = [0]*len(self.original_samples)
 
         for i in range(0, len(freqs)):
             # center freq +/- bw to get cutoff freq -- adjustable
