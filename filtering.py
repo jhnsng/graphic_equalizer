@@ -23,7 +23,7 @@ class BandpassFilter():
         return iirfilter(self.order, [self.f_l, self.f_h], btype='band', analog=False, output='sos', fs=self.f_s)
 
     def filter(self, sos, x):
-        self.sos = sos
+        self.sos = sos # second order sections
         self.x = x
         output = sosfilt(self.sos, self.x)
         return output
